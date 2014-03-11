@@ -4,24 +4,15 @@ class Mutate{
   var random = new Random();
   
   
-  List<Ddna> populate(List<Ddna> parent, int childrencunt){
-    var children = new List.generate(childrencunt,(_){
-      parent.shuffle(random);
-      return mate(parent.first, parent.last);
-    });
-    parent.addAll(children);
-    return parent;
+  List<Ddna> populate(int childrencunt, Ddna select()){
+    return new List.generate(childrencunt,(_) => mate(select(), select()));
   }
   
   Ddna mate(Ddna a, Ddna b){
-    var list = new List.generate(583,(i){
-      if(random.nextDouble() < 0.1){
-        return random.nextDouble();
-      }
-      var mn = min(a.ddna[i],b.ddna[i]);
-      var delta = max(a.ddna[i],b.ddna[i]) - mn;
-      return mn + delta * random.nextDouble();
-    });
+    var cross = random.nextInt(583);
+    var list = [];
+    list.addAll(a.ddna.take(cross));
+    list.addAll(b.ddna.skip(cross));
     return new Ddna(list);
   }
 }

@@ -3,13 +3,13 @@ library gradientdna;
 import 'dart:async';
 import 'dart:html';
 import 'dart:math';
-import 'dart:collection';
 
 part 'src/color.dart';
 part 'src/ddna.dart';
 part 'src/fitnes.dart';
 part 'src/genetic.dart';
 part 'src/mutate.dart';
+part 'src/selection.dart';
 
 void main() {
   var gen = new Genetic();

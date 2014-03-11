@@ -5,6 +5,8 @@ class Genetic{
   List<Ddna> population;
   Mutate mutate = new Mutate();
   Fitnes fitnes = new Fitnes();
+  Selection select = new Selection();
+  int gen = 0;
   
   init(){
     population = new List.generate(pop, (_) => new Ddna.random());
@@ -15,26 +17,25 @@ class Genetic{
   }
   
   selection(){
-    population = new SplayTreeMap
-        .fromIterables(population.map((d)=>d.fitnes), population)
-        .values.toList().reversed.take(100).toList();
+    select.update(population);
   }
   
   repopulate(){
-    population = mutate.populate(population,pop - population.length);
+    population = mutate.populate(pop,select.select);
   }
   
   paint(){
-    var score = querySelector('#score');
+    gen += 1;
     CanvasElement canvas = querySelector('#gradient');
     CanvasRenderingContext2D paint = canvas.getContext('2d');
-    fitnes.paint(paint,population.first);
-    score.text = (population.first.fitnes*100).toString();
+    fitnes.paint(paint,select.topDog);
+    querySelector('#score').text = (select.topDog.fitnes*100).toString();
+    querySelector('#gen').text = gen.toString();
   }
   
   start(){
     timer(init, 'Generate 1000Ddna');
-    new Timer.periodic(const Duration(milliseconds: 500), (t)=> timer(loop, 'Generation:'));
+    new Timer.periodic(const Duration(milliseconds: 100), (t)=> timer(loop, 'Generation:'));
   }
   
   loop(){
