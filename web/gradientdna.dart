@@ -2,6 +2,7 @@ library gradientdna;
 
 import 'dart:html';
 import 'dart:math';
+import 'dart:collection';
 
 part 'src/color.dart';
 part 'src/ddna.dart';
@@ -10,15 +11,28 @@ part 'src/mutate.dart';
 
 void main() {
   var image = new Image();
-  var ddna = new Ddna.random();
+  var mutate = new Mutate();
+  List<Ddna> ddna = new List.generate(25, (_) => new Ddna.random());
+  
+  double testDna(Ddna ddna){
+    var canvas = new CanvasElement(width: 256,height: 256);
+    paintDdna(canvas.getContext('2d'),ddna);
+    var data = canvas.getContext('2d').getImageData(0, 0, 256, 256);
+    return image.test(data);
+  }
+
   var score = querySelector('#score');
   
   CanvasElement canvas = querySelector('#gradient');
   CanvasRenderingContext2D paint = canvas.getContext('2d');
   
-  paintDdna(paint, ddna);
+  var survivors = new SplayTreeMap.fromIterables(ddna.map(testDna), ddna)
+    .values.take(5).toList();
   
+  paintDdna(paint, survivors.first);
   score.text = image.test(paint.getImageData(0, 0, 256, 256)).toString();
+  
+  ddna = mutate.populate(survivors,20);
 }
 
 paintDdna(paint, ddna){
