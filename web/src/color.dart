@@ -19,7 +19,7 @@ class Color{
   }
   
   String toString(){
-    return 'rgba($r,$g,$b,$a)';
+    return 'rgba($r,$g,$b,${a.toStringAsFixed(5)})';
   }
   
   static List<int> hslToRgb(num hue, num saturation, num luminance) {

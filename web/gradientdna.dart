@@ -9,7 +9,6 @@ part 'src/color.dart';
 part 'src/ddna.dart';
 part 'src/fitnes.dart';
 part 'src/genetic.dart';
-part 'src/image.dart';
 part 'src/mutate.dart';
 
 void main() {

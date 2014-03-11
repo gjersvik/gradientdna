@@ -42,12 +42,12 @@ class Gradiant{
   
   Gradiant(Iterable<double> ddna){
     var local = ddna.take(8);
-    x0 = ddna.elementAt(0) * 256;
-    x1 = ddna.elementAt(1) * 256;
-    y0 = ddna.elementAt(2) * 256;
-    y1 = ddna.elementAt(3) * 256;
-    r0 = ddna.elementAt(4) * 256;
-    r1 = ddna.elementAt(5) * 256;
+    x0 = ddna.elementAt(0);
+    x1 = ddna.elementAt(1);
+    y0 = ddna.elementAt(2);
+    y1 = ddna.elementAt(3);
+    r0 = ddna.elementAt(4);
+    r1 = ddna.elementAt(5);
     radial = ddna.elementAt(6) >= 0.5;
     var stepcount = (ddna.elementAt(7) * 9).floor() + 2;
     steps = new List.generate(stepcount, (i){
