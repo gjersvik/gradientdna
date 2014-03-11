@@ -1,8 +1,6 @@
 import 'dart:html';
 import 'dart:math';
 
-import 'package:color/color.dart';
-
 void main() {
   var random = new Random();
   var ddna = new List.generate(3,(_) => random.nextDouble());
