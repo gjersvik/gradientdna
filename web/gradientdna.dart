@@ -5,14 +5,19 @@ import 'dart:math';
 
 part 'src/color.dart';
 part 'src/ddna.dart';
+part 'src/image.dart';
 
 void main() {
+  var image = new Image();
   var ddna = new Ddna.random();
+  var score = querySelector('#score');
   
   CanvasElement canvas = querySelector('#gradient');
   CanvasRenderingContext2D paint = canvas.getContext('2d');
   
   paintDdna(paint, ddna);
+  
+  score.text = image.test(paint.getImageData(0, 0, 256, 256)).toString();
 }
 
 paintDdna(paint, ddna){
