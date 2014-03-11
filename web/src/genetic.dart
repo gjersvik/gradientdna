@@ -3,7 +3,6 @@ part of gradientdna;
 class Genetic{
   int pop = 1000;
   List<Ddna> population;
-  List<double> fit;
   Mutate mutate = new Mutate();
   Fitnes fitnes = new Fitnes();
   
@@ -12,12 +11,13 @@ class Genetic{
   }
   
   test(){
-    fit = fitnes.run(population);
+    fitnes.run(population);
   }
   
   selection(){
-    population = new SplayTreeMap.fromIterables(fit, population)
-            .values.toList().reversed.take(100).toList();
+    population = new SplayTreeMap
+        .fromIterables(population.map((d)=>d.fitnes), population)
+        .values.toList().reversed.take(100).toList();
   }
   
   repopulate(){
@@ -29,7 +29,7 @@ class Genetic{
     CanvasElement canvas = querySelector('#gradient');
     CanvasRenderingContext2D paint = canvas.getContext('2d');
     fitnes.paint(paint,population.first);
-    //score.text = fitnes.test(paint.getImageData(0, 0, 256, 256)).toString();
+    score.text = (population.first.fitnes*100).toString();
   }
   
   start(){

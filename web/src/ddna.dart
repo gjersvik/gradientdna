@@ -1,6 +1,7 @@
 part of gradientdna;
 
 class Ddna{
+  double fitnes;
   List<double> ddna;
   Color bgColor;
   List<Gradiant> gradiants;

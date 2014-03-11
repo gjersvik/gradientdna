@@ -1,39 +1,36 @@
 part of gradientdna;
 
 class Fitnes{
-  List<Ddna> ddna;
-  List<ImageData> data;
-  List<double> fit;
+  CanvasElement canvas;
+  var p;
   
   ImageData _data;
+  int _size;
   
-  List<double> run(List<Ddna> d){
-    ddna = d;
-    timer(paintAll,'PaintAll');
-    timer(testAll,'TestAll');
-    return fit;
-  }
-  
-  paintAll(){
+  Fitnes([size = 32]){
+    _size = size;
+    canvas = new CanvasElement(width: size,height: size);
+    p = canvas.getContext('2d');
+    
     var img = querySelector('#image');
-    var canvas = new CanvasElement(width: 32,height: 32);
-    var p = canvas.getContext('2d');
-    p.drawImage(img, 32, 32);
-    _data = p.getImageData(0, 0, 32, 32);
-    data = ddna.map((d){
-      paint(p,d,32);
-      return p.getImageData(0, 0, 32, 32);
-    }).toList();
+    p.drawImage(img, size, size);
+    _data = p.getImageData(0, 0, size, size);
+    
   }
   
-  testAll(){
-    fit = data.map(test).toList();
+  run(List<Ddna> ddna){
+    ddna.forEach((d){
+      if(d.fitnes == null){
+        paint(p,d,_size);
+        d.fitnes = test(p.getImageData(0, 0, _size, _size));
+      }
+    });
   }
   
   double test(ImageData data){
     var length = data.data.length;
     var pix = new Iterable.generate(length,(i){
-      return (256 - (data.data[i] - _data.data[i]).abs()) / 256;
+      return 1 - ((data.data[i] - _data.data[i]).abs() / 256);
     });
     
     return pix.map((d) => d / (length)).reduce((a,b) => a + b);
