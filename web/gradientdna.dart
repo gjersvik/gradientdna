@@ -6,6 +6,7 @@ import 'dart:math';
 part 'src/color.dart';
 part 'src/ddna.dart';
 part 'src/image.dart';
+part 'src/mutate.dart';
 
 void main() {
   var image = new Image();
