@@ -9,12 +9,12 @@ class Color{
   Color();
   Color.ddna(Iterable<double> ddna){
     var rgb = hslToRgb(ddna.elementAt(0) * 360, ddna.elementAt(1) * 100, ddna.elementAt(2) *100);
-    r = rgb[0];
-    g = rgb[1];
-    b = rgb[2];
+    r = (ddna.elementAt(0) * 256).floor();
+    g = (ddna.elementAt(1) * 256).floor();
+    b = (ddna.elementAt(2) * 256).floor();
     
     if(ddna.length == 4){
-      a = ddna.elementAt(3);
+      a = ddna.elementAt(3)/2;
     }
   }
   
